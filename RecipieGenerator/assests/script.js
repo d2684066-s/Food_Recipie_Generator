@@ -99,6 +99,7 @@ setInterval(ChangePlaceHolder,2000);
 /*--------------------------------------------------------------------------------------*/
 
 // API Configuration - works on both local and production
+// Version: 2026-03-18-v2 (Cache bust)
 const API_BASE_URL = (function() {
     // Check if running on Netlify (production)
     if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && !window.location.hostname.startsWith('127.0.0.1')) {
