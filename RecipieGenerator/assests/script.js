@@ -1,5 +1,5 @@
 
-let images = ['/images/1.jpg', '/images/2.jpg', '/images/3.jpg'];
+let images = ['/Images/1.jpg', '/Images/2.jpg', '/Images/3.jpg'];
 let index = 0;
 
 function changeBackground() {
@@ -13,19 +13,19 @@ setInterval(changeBackground, 3000);
 //for smoth transition
 const FoodCards = [
 {
-    FrontCard:['/images/Dish1.jpg','/images/Dish2.jpg','/images/Dish3.jpg'],
+    FrontCard:['/Images/Dish1.jpg','/Images/Dish2.jpg','/Images/Dish3.jpg'],
     BackCard:['An "egg chicken roll" is a street food dish, particularly popular in Kolkata, India, where a paratha (flatbread) is filled with stir-fried chicken and scrambled egg, then rolled up'
     ,'Probably the best-known Korean dish, bibimbap originated on the eve of Lunar New Year when it was traditional to use up all the vegetables and side-dishes in the house. A hot stone bowl is filled with cooked rice and topped with vegetables, pickled Chinese radish, carrot and mushrooms.'
     ,'Biryani is a flavorful, layered dish of rice, meat or seafood, and spices that originated in South Asia. Its commonly made with chicken, lamb, or mutton, but can also be made with beef, prawns, or fish. '],
 },
 {
-    FrontCard:['/images/Dish4.jpg','/images/Dish5.jpg','/images/Dish6.jpg'],
+    FrontCard:['/Images/Dish4.jpg','/Images/Dish5.jpg','/Images/Dish6.jpg'],
     BackCard:['This rice bowl dish is almost as popular as ramen in Japan and a common lunchtime choice among busy Japanese workers. Donburi is made by preparing (normally by simmering or frying) various meat, fish and vegetables and serving over steamed rice in large bowls.'
     ,'chicken fried steak was born to go with American food classics like mashed potatoes and black-eyed peas.A slab of tenderized steak breaded in seasoned flour and pan fried, it’s kin to the Weiner Schnitzel brought to Texas by Austrian and German immigrants, who adapted their veal recipe to use the bountiful beef found in Texas.'
     ,'The most frequently preferred pizza recipe in Italy is Margarita, and it is consumed all over the world with its light structure. Prepared in a very practical way, Margarita contains flour, olive oil, water, dry yeast, salt, granulated sugar, tomatoes, oregano, basil, and mozzarella cheese.'],
 },
 {
-    FrontCard:['/images/Dish7.jpg','/images/Dish8.jpg','/images/Dish9.jpg'],
+    FrontCard:['/Images/Dish7.jpg','/Images/Dish8.jpg','/Images/Dish9.jpg'],
     BackCard:['Shchi is a deceptively simple soup with a complex taste. What may look like a simple cabbage soup is actually a filling but light soup made from sauerkraut, cabbage, or other green leaves. Shchi is an integral part of Russian cuisine, and has been eaten almost daily for centuries in Russia'
     ,'DA famous Indo-Chinese dish that combines tender chicken pieces with flavorful noodles. The savoury broth enhances the taste and complements the textures of the dish, making it a popular choice for both quick meals and special occasions.'
     ,'Jjigae is a type of rich, spicy stew. This seafood and silken tofu version is called sundubu and is served like bibimbap in a hot stone bowl. Discover more warming stew recipes with our winter stew recipes and vegan stew recipes.'],
@@ -89,7 +89,7 @@ let n = 0;
 
 function ChangePlaceHolder() {
     const SearchBox = document.getElementById('recipe-search');
-    SearchBox.setAttribute("placeholder", `Search for recipes like : ${text[index]}`);
+    SearchBox.setAttribute("placeholder", `Search for recipes like : ${text[n]}`);
     n = (n + 1) % text.length; // Loop back to the first item
 }
 

@@ -1,10 +1,4 @@
 Django==6.0.3
-Pillow==10.0.0
-transformers==4.35.2
-torch==2.1.1
-diffusers==0.21.4
-safetensors==0.4.1
-accelerate==0.24.1
 gunicorn==21.2.0
 django-cors-headers==4.3.1
 

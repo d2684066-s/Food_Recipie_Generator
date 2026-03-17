@@ -1,44 +1,5 @@
-import re
 from django.http import JsonResponse
 from django.shortcuts import render
-from transformers import pipeline, GPT2Tokenizer, GPT2LMHeadModel
-from diffusers import StableDiffusionPipeline
-import torch
-import base64
-from io import BytesIO
-from PIL import Image
-
-# Lazy loading of models to avoid startup delays
-generator = None
-image_generator = None
-recipe_tokenizer = None
-recipe_model = None
-
-def load_generator():
-    global generator
-    if generator is None:
-        generator = pipeline("text-generation", model="gpt2-medium", device=-1)
-        generator.tokenizer.pad_token = generator.tokenizer.eos_token
-    return generator
-
-def load_image_generator():
-    global image_generator
-    if image_generator is None:
-        image_generator = StableDiffusionPipeline.from_pretrained(
-            "stabilityai/stable-diffusion-2-1", 
-            torch_dtype=torch.float32,
-            use_safetensors=True
-        ).to("cpu")
-    return image_generator
-
-def load_recipe_models():
-    global recipe_tokenizer, recipe_model
-    if recipe_tokenizer is None:
-        recipe_model_name = "mbien/recipenlg"
-        recipe_tokenizer = GPT2Tokenizer.from_pretrained(recipe_model_name)
-        recipe_tokenizer.pad_token = recipe_tokenizer.eos_token
-        recipe_model = GPT2LMHeadModel.from_pretrained(recipe_model_name)
-    return recipe_tokenizer, recipe_model
 
 def Home(request):
     return render(request, "Home.html")
@@ -108,23 +69,9 @@ INSTRUCTIONS:
 
 
 def GenerateImage(dish_name):
-    try:
-        print(f"🖼️ Generating image for: {dish_name}")
-        # Load image generator lazily
-        img_gen = load_image_generator()
-        prompt = f"High quality professional food photography of {dish_name}, ultra realistic, appetizing, well-lit, on white background"
-        
-        image = img_gen(prompt, num_inference_steps=15, guidance_scale=7.5).images[0]
-        buffered = BytesIO()
-        image.save(buffered, format="PNG")
-        img_str = base64.b64encode(buffered.getvalue()).decode()
-        print(f"✅ Image generated successfully!")
-        return img_str
-    except Exception as e:
-        print(f"❌ Image generation error: {e}")
-        import traceback
-        traceback.print_exc()
-        return None
+    # Disabled in cloud deployment to avoid heavy model downloads.
+    print(f"ℹ️ Image generation skipped for: {dish_name}")
+    return None
 
 def GetRecipe(request):
     dish_name = request.GET.get("dish", "").strip()

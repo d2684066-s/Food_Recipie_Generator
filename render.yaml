@@ -3,12 +3,15 @@ services:
     name: food-recipe-api
     env: python
     plan: free
-    buildCommand: "pip install -r requirements.txt && cd RecipieGenerator && python manage.py collectstatic --noinput"
-    startCommand: "cd RecipieGenerator && gunicorn RecipieGenerator.wsgi:application --bind 0.0.0.0:$PORT --workers 3"
+    buildCommand: "pip install -r RecipieGenerator/requirements.txt"
+    startCommand: "cd RecipieGenerator && gunicorn RecipieGenerator.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120"
+    healthCheckPath: "/get-recipe/?dish=pizza"
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
       - key: DEBUG
         value: false
       - key: ALLOWED_HOSTS
-        value: "*.onrender.com,*.netlify.app"
+        value: "food-recipe-api.onrender.com,.onrender.com,.netlify.app,localhost,127.0.0.1"
       - key: SECRET_KEY
-        value: "django-insecure-your-secret-key-change-this-in-production"
+        generateValue: true

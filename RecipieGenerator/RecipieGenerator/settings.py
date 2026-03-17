@@ -24,9 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-e%toq8w%69+!gz$ru2l#^4@d+y%d&&f9kfsvgag1_34(cp*y3t')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'True') == 'True'
+DEBUG = os.getenv('DEBUG', 'True').lower() in ('true', '1', 'yes')
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+    if host.strip()
+]
 
 
 # Application definition
@@ -142,8 +146,12 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8005",
     "http://127.0.0.1:3000",
     "https://saritas-kitchen.netlify.app",
-    "https://*.netlify.app",
-    "https://*.onrender.com",
+    "https://dibya-kitchen.netlify.app",
+    "https://food-recipe-api.onrender.com",
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.netlify\.app$",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
