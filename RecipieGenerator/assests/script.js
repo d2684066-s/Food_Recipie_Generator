@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let response = await fetch(`/get-recipe/?dish=${encodeURIComponent(dish)}`);
 
             if (!response.ok) {
-                let errorData = await response.json();
+                let errorData = await response.json().catch(() => ({}));
                 throw new Error(errorData.error || "Failed to fetch recipe.");
             }
 
@@ -135,12 +135,19 @@ document.addEventListener("DOMContentLoaded", function () {
             let recipeLines = data.recipe.split("\n").filter(line => line.trim() !== "");  
             let formattedRecipe = recipeLines.map(line => `<li>${line}</li>`).join("");
 
-            resultDiv.innerHTML = `
+            let htmlContent = `
                 <div class="recipe-box">
                     <h3>${data.dish}</h3>
                     <ul>${formattedRecipe}</ul>
-                </div>
             `;
+            
+            // Add image if available
+            if (data.image) {
+                htmlContent += `<img src="data:image/png;base64,${data.image}" alt="${data.dish}" style="max-width: 100%; margin-top: 20px; border-radius: 8px;">`;
+            }
+            
+            htmlContent += `</div>`;
+            resultDiv.innerHTML = htmlContent;
         } catch (error) {
             console.error("❌ Error fetching recipe:", error);
             resultDiv.innerHTML = "<p style='color:red;'>❌ Failed to fetch recipe. Try again.</p>";
