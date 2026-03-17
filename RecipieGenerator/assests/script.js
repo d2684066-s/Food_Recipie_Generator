@@ -103,7 +103,7 @@ const API_BASE_URL = (function() {
     // Check if running on Netlify (production)
     if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && !window.location.hostname.startsWith('127.0.0.1')) {
         // Production - use Render backend
-        return 'https://food-recipe-api.onrender.com';
+        return 'https://food-recipie-generator-dba6.onrender.com';
     }
     // Development - use localhost
     return 'http://localhost:8005';
