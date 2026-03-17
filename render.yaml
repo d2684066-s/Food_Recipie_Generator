@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: food-recipe-api
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt && cd RecipieGenerator && python manage.py collectstatic --noinput"
+    startCommand: "cd RecipieGenerator && gunicorn RecipieGenerator.wsgi:application --bind 0.0.0.0:$PORT --workers 3"
+    envVars:
+      - key: DEBUG
+        value: false
+      - key: ALLOWED_HOSTS
+        value: "*.onrender.com,*.netlify.app"
+      - key: SECRET_KEY
+        value: "django-insecure-your-secret-key-change-this-in-production"

@@ -97,6 +97,20 @@ setInterval(ChangePlaceHolder,2000);
 
 
 /*--------------------------------------------------------------------------------------*/
+
+// API Configuration - works on both local and production
+const API_BASE_URL = (function() {
+    // Check if running on Netlify (production)
+    if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && !window.location.hostname.startsWith('127.0.0.1')) {
+        // Production - use Render backend
+        return 'https://food-recipe-api.onrender.com';
+    }
+    // Development - use localhost
+    return 'http://localhost:8005';
+})();
+
+console.log(`🔗 API URL: ${API_BASE_URL}`);
+
 document.addEventListener("DOMContentLoaded", function () {
     console.log("✅ DOM Loaded");
 
@@ -120,8 +134,9 @@ document.addEventListener("DOMContentLoaded", function () {
         resultDiv.innerHTML = "<p>🔄 Generating recipe...</p>";
 
         try {
-            console.log(`🔍 Fetching: /get-recipe/?dish=${dish}`);
-            let response = await fetch(`/get-recipe/?dish=${encodeURIComponent(dish)}`);
+            const apiUrl = `${API_BASE_URL}/get-recipe/?dish=${encodeURIComponent(dish)}`;
+            console.log(`🔍 Fetching: ${apiUrl}`);
+            let response = await fetch(apiUrl);
 
             if (!response.ok) {
                 let errorData = await response.json().catch(() => ({}));

@@ -1,0 +1,28 @@
+[build]
+  # Build command - copies frontend files to public directory
+  command = "mkdir -p public && cp RecipieGenerator/Template/Home.html public/index.html && cp -r RecipieGenerator/assests/* public/ 2>/dev/null || true && cp -r RecipieGenerator/static/* public/ 2>/dev/null || true"
+  
+  # Directory to publish (where the built files are)
+  publish = "public"
+
+[dev]
+  # Local dev settings
+  framework = "html"
+  command = "echo 'Serving from RecipieGenerator/Template'"
+  targetPort = 3000
+
+[[redirects]]
+  # SPA redirect - send all 404s to index.html
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Environment variables for API calls
+[context.production.environment]
+  REACT_APP_API_URL = "https://food-recipe-api.onrender.com"
+
+[context.preview.environment]
+  REACT_APP_API_URL = "https://food-recipe-api.onrender.com"
+
+[context.branch-deploy.environment]
+  REACT_APP_API_URL = "https://food-recipe-api.onrender.com"
