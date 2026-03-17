@@ -1,0 +1,11 @@
+{
+  "name": "food-recipe-generator-frontend",
+  "version": "1.0.0",
+  "description": "Food Recipe Generator - Frontend (static HTML/CSS/JS)",
+  "scripts": {
+    "build": "bash build.sh"
+  },
+  "keywords": ["recipe", "food", "generator"],
+  "author": "",
+  "license": "MIT"
+}
