@@ -1,6 +1,6 @@
 [build]
-  # Build command - copies frontend files to public directory
-  command = "mkdir -p public && cp RecipieGenerator/Template/Home.html public/index.html && cp -r RecipieGenerator/assests/* public/ 2>/dev/null || true && cp -r RecipieGenerator/static/* public/ 2>/dev/null || true"
+  # Build command - uses build script
+  command = "bash build.sh"
   
   # Directory to publish (where the built files are)
   publish = "public"
