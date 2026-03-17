@@ -1,5 +1,5 @@
 [build]
-  # Build command - uses build script
+  # Build command - only copy frontend files (no Python needed)
   command = "bash build.sh"
   
   # Directory to publish (where the built files are)
@@ -16,6 +16,11 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# Skip installing Python packages - Netlify only needs frontend files
+[build.environment]
+  SKIP_INSTALL_DEVTOOLS = "true"
+  NPM_FLAGS = "--legacy-peer-deps"
 
 # Environment variables for API calls
 [context.production.environment]
