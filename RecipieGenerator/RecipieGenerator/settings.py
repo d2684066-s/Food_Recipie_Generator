@@ -147,7 +147,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "https://saritas-kitchen.netlify.app",
     "https://dibya-kitchen.netlify.app",
-    "https://food-recipe-api.onrender.com",
+    "https://food-recipie-generator-dba6.onrender.com",
 ]
 
 CORS_ALLOWED_ORIGIN_REGEXES = [

@@ -109,8 +109,21 @@ setInterval(ChangePlaceHolder,2000);
 
 
 /*--------------------------------------------------------------------------------------*/
+// API Configuration - works on both local and production
+const API_BASE_URL = (function() {
+    // Check if running on Netlify (production)
+    if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && !window.location.hostname.startsWith('127.0.0.1')) {
+        // Production - use Render backend
+        return 'https://food-recipie-generator-dba6.onrender.com';
+    }
+    // Development - use localhost
+    return 'http://localhost:8005';
+})();
+
+console.log(`🔗 API URL: ${API_BASE_URL}`);
+
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("DOM Loaded");
+    console.log("✅ DOM Loaded");
 
     const searchButton = document.getElementById("search-btn");
     const resultDiv = document.getElementById("recipe-results");
@@ -138,9 +151,11 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
 
         try {
-            const response = await fetch(`/get-recipe/?dish=${encodeURIComponent(dish)}`);
+            const apiUrl = `${API_BASE_URL}/get-recipe/?dish=${encodeURIComponent(dish)}`;
+            console.log(`🔍 Fetching: ${apiUrl}`);
+            const response = await fetch(apiUrl);
             if (!response.ok) {
-                const errorData = await response.json();
+                const errorData = await response.json().catch(() => ({}));
                 throw new Error(errorData.error || "Failed to fetch recipe.");
             }
 
