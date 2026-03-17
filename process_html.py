@@ -3,34 +3,42 @@ import os
 import re
 import sys
 
+
 def process_html(input_file, output_file):
     """Convert Django template tags to direct file paths"""
-    
+
     try:
         with open(input_file, 'r') as f:
             content = f.read()
-        
+
         # Remove {% load static %} tag
         content = re.sub(r'{%\s*load\s+static\s*%}', '', content)
-        
+
         # Replace {% static 'path' %} with just 'path' (remove leading slash if present)
         # Pattern: {% static 'anything' %} or {% static "anything" %}
         def replace_static(match):
             path = match.group(1) or match.group(2)
             # Remove leading slash for relative paths
             path = path.lstrip('/')
+            # Netlify is case-sensitive; files are in Images/
+            if path.lower().startswith('images/'):
+                path = 'Images/' + path.split('/', 1)[1]
             return path
-        
-        content = re.sub(r'{%\s*static\s+[\'"]([^\'"]*)[\'"]s*%}', replace_static, content)
-        
+
+        content = re.sub(r"{%\s*static\s+['\"]([^'\"]*)['\"]\s*%}", replace_static, content)
+
+        # Guardrail: fail the build if template tags are still present.
+        if '{%' in content or '%}' in content:
+            raise ValueError('Template tag conversion incomplete: found remaining Django template tags')
+
         # Write output
         os.makedirs(os.path.dirname(output_file), exist_ok=True)
         with open(output_file, 'w') as f:
             f.write(content)
-        
+
         print(f"✅ Processed: {input_file} → {output_file}")
         return True
-        
+
     except Exception as e:
         print(f"❌ Error processing {input_file}: {e}", file=sys.stderr)
         return False

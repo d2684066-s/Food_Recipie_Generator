@@ -45,3 +45,6 @@ venv/
 # Backup files
 *.bak
 *.backup
+
+# Netlify build output
+public/
