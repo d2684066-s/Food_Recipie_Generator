@@ -17,7 +17,7 @@ def process_html(input_file, output_file):
         # Replace {% static 'path' %} with just 'path' (remove leading slash if present)
         # Pattern: {% static 'anything' %} or {% static "anything" %}
         def replace_static(match):
-            path = match.group(1) or match.group(2)
+            path = match.group(1)
             # Remove leading slash for relative paths
             path = path.lstrip('/')
             # Netlify is case-sensitive; files are in Images/
